@@ -56,3 +56,4 @@ Tiempo de ejecución: 0.001294851303100586 segundos
 ```
 
 Adicionalmente muestra el grafo generado, con sus vertices de recubrimiento marcados:
+![Figure1](https://github.com/larodriguez22/Tarea6_algoritmos/blob/main/data/Figure1.png)
