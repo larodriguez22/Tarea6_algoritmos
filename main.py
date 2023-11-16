@@ -78,6 +78,20 @@ def cubrimiento_vertices_grado(archivo):
     
     return vertices_cubrimiento
 
+def cubrimiento_algo2(archivo):
+    G = nx.read_edgelist(archivo, delimiter='\t', nodetype=int)
+    vertices_cubrimiento = []
+    while len(G.edges())>0:
+        max_grado = 0
+        vertice_max_grado = 0
+        for v in G.nodes():
+            if G.degree(v) > max_grado:
+                max_grado = G.degree(v)
+                vertice_max_grado = v
+        vertices_cubrimiento.append(vertice_max_grado)
+        G.remove_edges_from(list(G.edges(vertice_max_grado)))
+    return vertices_cubrimiento
+
 def main_algo1():
     archivo = ""
     num = int(input("Subio un archivo del grafo (1) o desea generar un grafo (2): "))
@@ -101,6 +115,33 @@ def main_algo1():
         print(f"Tiempo de ejecución: {tiempo_ejecucion} segundos")
         
         dibujar_grafo_con_cubrimiento(archivo, vertices_cubrimiento)
+    except FileNotFoundError:
+        print("El archivo no se encontró en la ruta especificada.")
+    except Exception as e:
+        print("Ocurrió un error:", e)
+
+def main_algo2():
+    archivo = ""
+    num = int(input("Subio un archivo del grafo (1) o desea generar un grafo (2): "))
+    if num == 1:
+      archivo = sys.argv[1]
+    elif num == 2:
+      num_vertices = int(input("Defina el maximo de nodos que quiera para generar el grafo: ")) # 5
+      archivo = 'data/grafo_aleatorio_'+str(num_vertices)+'.txt'
+      generar_grafo_aleatorio(num_vertices, archivo) 
+
+    #algorithm
+    try:
+        start_time = time.time()
+        vertices_cubrimiento = cubrimiento_algo2(archivo)
+        end_time = time.time()
+        tiempo_ejecucion = end_time - start_time
+
+        print(f"\nArchivo: {archivo}")
+        print(f"Vertices del cubrimiento: {vertices_cubrimiento}")
+        print(f"Tamaño del conjunto de vértices: {len(vertices_cubrimiento)}")
+        print(f"Tiempo de ejecución: {tiempo_ejecucion} segundos")
+
     except FileNotFoundError:
         print("El archivo no se encontró en la ruta especificada.")
     except Exception as e:
@@ -142,10 +183,11 @@ if __name__ == "__main__":
         main_algo1()
     if algo == 2:
         print("Algoritmo 2")
-        # main_algo2()
+        main_algo2()
     if algo == 3:
         print("Algoritmo 3")
         main_algo3()
     if algo == 4:
         print("Algoritmo 4")
         # main_algo4()
+    
