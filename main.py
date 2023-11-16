@@ -85,7 +85,7 @@ def main_algo1():
       archivo = sys.argv[1]
     elif num == 2:
       num_vertices = int(input("Defina el maximo de nodos que quiera para generar el grafo: ")) # 5
-      archivo = 'grafo_aleatorio_'+str(num_vertices)+'.txt'
+      archivo = 'data/grafo_aleatorio_'+str(num_vertices)+'.txt'
       generar_grafo_aleatorio(num_vertices, archivo) 
       print("Grafo aleatorio generado")
 
@@ -113,7 +113,7 @@ def main_algo3():
       archivo = sys.argv[1]
     elif num == 2:
       num_vertices = int(input("Defina el maximo de nodos que quiera para generar el grafo: ")) # 5
-      archivo = 'grafo_aleatorio_'+str(num_vertices)+'.txt'
+      archivo = 'data/grafo_aleatorio_'+str(num_vertices)+'.txt'
       generar_grafo_aleatorio(num_vertices, archivo) 
       print("Grafo aleatorio generado")
 
