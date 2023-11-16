@@ -3,6 +3,7 @@ import time
 import networkx as nx
 import matplotlib.pyplot as plt
 import random
+import algoritmo4 as a4
 
 def generar_grafo_aleatorio(num_vertices, archivo_salida, probabilidad_conexion=0.2):
     G = nx.gnp_random_graph(num_vertices, probabilidad_conexion, directed=True)
@@ -75,7 +76,8 @@ def cubrimiento_vertices_grado(archivo):
         
         # Descartar todos los demás ejes conectados por el vértice escogido
         G.remove_edges_from(list(G.edges(vertice_max_grado)))
-    
+    print(type(vertices_cubrimiento))
+    print(vertices_cubrimiento)
     return vertices_cubrimiento
 
 def cubrimiento_algo2(archivo):
@@ -91,6 +93,16 @@ def cubrimiento_algo2(archivo):
         vertices_cubrimiento.append(vertice_max_grado)
         G.remove_edges_from(list(G.edges(vertice_max_grado)))
     return vertices_cubrimiento
+
+def cubrimiento_algo4(archivo):
+    G = nx.read_edgelist(archivo, delimiter='\t', nodetype=int)
+    # Maximum vertex found.
+    max_origin, max_destiny = max(G.edges, key=lambda item: max(item[0], item[1]))
+    adjacency_list = [[] for _ in range(max(max_origin, max_destiny)+1)]
+    for edge in G.edges():
+        u, v = edge
+        adjacency_list[u].append(v)
+    return set(a4.algorithm4(adjacency_list))
 
 def main_algo1():
     archivo = ""
@@ -174,7 +186,34 @@ def main_algo3():
         print("El archivo no se encontró en la ruta especificada.")
     except Exception as e:
         print("Ocurrió un error:", e)
+
+def main_algo4():
+    archivo = ""
+    num = int(input("Subio un archivo del grafo (1) o desea generar un grafo (2): "))
+    if num == 1:
+      archivo = sys.argv[1]
+    elif num == 2:
+      num_vertices = int(input("Defina el maximo de nodos que quiera para generar el grafo: ")) # 5
+      archivo = 'data/grafo_aleatorio_'+str(num_vertices)+'.txt'
+      generar_grafo_aleatorio(num_vertices, archivo) 
+      print("Grafo aleatorio generado")
+
+    try:
+        start_time = time.time()
+        vertices_cubrimiento = cubrimiento_algo4(archivo)
+        end_time = time.time()
+        tiempo_ejecucion = end_time - start_time
     
+        print(f"\nArchivo: {archivo}")
+        print(f"Vertices del cubrimiento: {vertices_cubrimiento}")
+        print(f"Tamaño del conjunto de vértices: {len(vertices_cubrimiento)}")
+        print(f"Tiempo de ejecución: {tiempo_ejecucion} segundos")
+        
+        dibujar_grafo_con_cubrimiento(archivo, vertices_cubrimiento)
+    except FileNotFoundError:
+        print("El archivo no se encontró en la ruta especificada.")
+    except Exception as e:
+        print("Ocurrió un error:", e)
 
 if __name__ == "__main__":
     algo = int(input("Desea ejecutar el algoritmo 1 (1), el algoritmo (2), el algoritmo 3 (3) o el algoritmo 4 (4): "))
@@ -189,5 +228,5 @@ if __name__ == "__main__":
         main_algo3()
     if algo == 4:
         print("Algoritmo 4")
-        # main_algo4()
+        main_algo4()
     
