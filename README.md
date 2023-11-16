@@ -9,7 +9,7 @@ En este proyecto se implementaran uno programa que resuelva el problema de cubri
 Asegúrate de tener Python instalado en tu sistema. Luego, puedes instalar las dependencias utilizando el siguiente comando:
 
 ```bash
-pip install matplotlib numpy networkx
+pip install matplotlib numpy networkx scipy
 ```
 
 ## Descripcion de los enunciados
