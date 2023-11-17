@@ -57,3 +57,7 @@ Tiempo de ejecución: 0.001294851303100586 segundos
 
 Adicionalmente muestra el grafo generado, con sus vertices de recubrimiento marcados:
 ![Figure1](https://github.com/larodriguez22/Tarea6_algoritmos/blob/main/data/Figure1.png)
+
+## Pruebas
+
+Los grafos usados en las pruebas son los que se encuentran dentro de la carpeta data/. En este hay de tamaño 10, 100, 101, 1000, 1001 y 25 (que no se usó).
